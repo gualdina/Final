@@ -21,7 +21,7 @@ public class UserRequest {
     private String roles;
 
     @JsonIgnore
-    public User userCompose(){
+    public User userCompose() {
         return User.builder()
                 .userName(this.getUserName())
                 .age(this.getAge())
@@ -31,8 +31,9 @@ public class UserRequest {
                 .invoices(new ArrayList<>())
                 .build();
     }
+
     @JsonIgnore
-    public User userIdentifier(Long id){
+    public User userIdentifier(Long id) {
         return User.builder()
                 .id(id)
                 .userName(this.getUserName())

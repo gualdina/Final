@@ -19,33 +19,26 @@ public class ProductService {
         this.productRepository = productRepository;
         this.invoiceRepository = invoiceRepository;
     }
+
     //get all
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
     //find by id
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElseThrow(ProductNotFound::new);
     }
+
     //find invoice by id
     public Invoice getInvoiceById(Long id) {
         return invoiceRepository.findById(id).orElseThrow(InvoiceNotFound::new);
     }
+
     //create product
-    public Product createProduct(Product product){
-       return productRepository.save(product);
-   }
-    //add Product to invoice
-    public Product addProductToInvoice(Long invoiceId, Long productId){
-        Product product = this.getProductById(productId);
-        Invoice invoice = this.getInvoiceById(invoiceId);
-        invoice.getInvoiceWithProducts().add(product);
-        return product;
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
     }
-    //remove product from invoice
-    public void removeProductToInvoice(Long invoiceId, Long productId){
-        Product product = getProductById(productId);
-        Invoice invoice = this.getInvoiceById(invoiceId);
-        invoice.getInvoiceWithProducts().remove(product);
-    }
+
 }
+

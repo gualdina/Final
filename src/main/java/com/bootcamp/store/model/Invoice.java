@@ -17,36 +17,36 @@ import java.util.List;
 @Builder
 @Entity
 public class Invoice {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int number;
     private double total;
     @ManyToOne
-    @JoinColumn(name="invoice_id")
-    private User invoiceWithUser = new User();
-
+    @JoinColumn(name = "id_user")
+    private User user;
     @ManyToMany
     @JoinTable(
             name = "invoiceWithProducts",
-            joinColumns = @JoinColumn(name= "invoice_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "invoice_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private List<Product> invoiceWithProducts = new ArrayList<>();
 
     @JsonIgnore
-    public InvoiceResponse invoiceResponses() {
-            List<ProductResponse> productResponseArrayList = new ArrayList<>();
-            if(!invoiceWithProducts.isEmpty()){
-                for(Product product : invoiceWithProducts){
-                    productResponseArrayList.add(product.productResponses());
-                }
+    public InvoiceResponse createInvoiceResponse() {
+        List<ProductResponse> productResponseList = new ArrayList<>();
+        if (invoiceWithProducts != null && !invoiceWithProducts.isEmpty()) {
+            for (Product product : invoiceWithProducts) {
+                productResponseList.add(product.productResponses());
             }
-            return new InvoiceResponse(
-                    this.id,
-                    this.number,
-                    this.total,
-                    this.invoiceResponses().getUserId(),
-                    productResponseArrayList
-            );
+        }
+        return new InvoiceResponse(
+                this.id,
+                this.number,
+                this.total,
+                this.user.getId(),
+                productResponseList
+        );
     }
 }

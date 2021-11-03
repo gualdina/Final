@@ -27,24 +27,30 @@ public class InvoiceService {
     }
 
     //find all
-    public List<Invoice> getAllInvoices() { return invoiceRepository.findAll();}
+    public List<Invoice> getAllInvoices() {
+        return invoiceRepository.findAll();
+    }
+
     //find by id
-    public Invoice getInvoiceById(Long id){
+    public Invoice getInvoiceById(Long id) {
         return invoiceRepository.findById(id).orElseThrow(InvoiceNotFound::new);
     }
+
     //find product by id
-    public Product getProductById(Long id){
+    public Product getProductById(Long id) {
         return productRepository.findById(id).orElseThrow(ProductNotFound::new);
     }
+
     //find user by id
-    public User getUserById(Long id){
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(UserNotFound::new);
     }
+
     //create invoice
-    public Invoice createInvoice(Long userId, List<Long> productIdList){
-    List<Product> products = new ArrayList<>();
-    double total = 0.0;
-        for (Long productId : productIdList){
+    public Invoice createInvoice(Long userId, List<Long> productIdList) {
+        List<Product> products = new ArrayList<>();
+        double total = 0.0;
+        for (Long productId : productIdList) {
             Product product = this.getProductById(productId);
             products.add(product);
             total += product.getValue();
@@ -54,39 +60,12 @@ public class InvoiceService {
         Invoice invoice = invoiceRepository.save(Invoice
                 .builder()
                 .total(total)
-                .invoiceWithUser(user)
+                .user(user)
                 .invoiceWithProducts(products)
                 .build());
         user.getInvoices().add(invoice);
-        return invoiceRepository.save(invoice);
-    }
-
-
-
-    //add invoice to User
-    public Invoice addInvoiceToUser(Long userId, Long invoiceId){
-        Invoice invoice = this.getInvoiceById(invoiceId);
-        User user = this.getUserById(userId);
-        user.getInvoices().add(invoice);
+        userRepository.save(user);
         return invoice;
     }
-    //remove invoice from User
-    public void removeInvoiceFromUser(Long userId, Long invoiceId){
-        Invoice invoice = this.getInvoiceById(invoiceId);
-        User user = this.getUserById(userId);
-        user.getInvoices().remove(invoice);
-    }
-    //add product to invoice
-    public Invoice addInvoiceToProduct(Long productId, Long invoiceId){
-        Invoice invoice = this.getInvoiceById(invoiceId);
-        Product product = this.getProductById(productId);
-        product.getProductsOnInvoices().add(invoice);
-        return invoice;
-    }
-    // remove product from invoice
-    public void removeInvoiceFromProduct(Long productId, Long invoiceId){
-        Invoice invoice = this.getInvoiceById(invoiceId);
-        Product product = this.getProductById(productId);
-        product.getProductsOnInvoices().remove(invoice);
-    }
+
 }

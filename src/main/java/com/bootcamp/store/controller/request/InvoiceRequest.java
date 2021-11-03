@@ -2,14 +2,12 @@ package com.bootcamp.store.controller.request;
 
 import com.bootcamp.store.model.Invoice;
 import com.bootcamp.store.model.Product;
-import com.bootcamp.store.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -21,7 +19,7 @@ public class InvoiceRequest {
     private double total;
 
     @JsonIgnore
-    public Invoice invoiceBuilder(List<Product> products){
+    public Invoice invoiceBuilder(List<Product> products) {
         return Invoice.builder()
                 .number(this.getNumber())
                 .total(this.getTotal())

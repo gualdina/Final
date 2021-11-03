@@ -18,20 +18,22 @@ public class ProductRequest {
     private double value;
 
     @JsonIgnore
-    public Product productCompose(){
+    public Product productCompose() {
         return Product.builder()
                 .name(this.getName())
                 .value(this.getValue())
                 .productsOnInvoices(new ArrayList<>())
                 .build();
     }
+
     @JsonIgnore
-    public Product productIdentifier(Long id){
-       return Product.builder()
-               .id(id)
-               .name(this.getName())
-               .value(this.getValue())
-               .build();
-}
+    public Product productIdentifier(Long id) {
+        return Product.builder()
+                .id(id)
+                .name(this.getName())
+                .value(this.getValue())
+                .build();
+    }
+
 }
 

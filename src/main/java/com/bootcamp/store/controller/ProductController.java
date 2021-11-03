@@ -49,16 +49,4 @@ public class ProductController {
         return productService.createProduct(productRequest.productCompose()).productResponses();
     }
 
-    //add product to invoice
-    @PutMapping(value = "/invoice/{id}/user/{id}")
-    public ProductResponse addProductToInvoice(@PathVariable(value = "id") Long productId, Long invoiceId) {
-        return productService.addProductToInvoice(productId, invoiceId).productResponses();
-    }
-
-    //remove product from invoice
-    @DeleteMapping(value = "/invoice-delete")
-    public void removeProductsFromInvoice(@PathVariable Long productId, Long invoiceId) {
-        productService.removeProductToInvoice(productId, invoiceId);
-    }
-
 }

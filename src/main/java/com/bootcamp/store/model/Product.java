@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -23,10 +22,10 @@ public class Product {
     private double value;
 
     @ManyToMany(mappedBy = "invoiceWithProducts", cascade = CascadeType.ALL)
-   private List<Invoice> productsOnInvoices;
+    private List<Invoice> productsOnInvoices;
 
     @JsonIgnore
-    public ProductResponse productResponses(){
+    public ProductResponse productResponses() {
         return new ProductResponse(
                 this.getId(),
                 this.getName(),

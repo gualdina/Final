@@ -17,6 +17,7 @@ public class ExceptionHandler {
                 LocalDateTime.now()
         );
     }
+
     @org.springframework.web.bind.annotation.ExceptionHandler({ProductNotFound.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public HttpErrorResponse handleGenericException(ProductNotFound exception) {
@@ -26,6 +27,7 @@ public class ExceptionHandler {
                 LocalDateTime.now()
         );
     }
+
     @org.springframework.web.bind.annotation.ExceptionHandler({UserNotFound.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public HttpErrorResponse handleGenericException(UserNotFound exception) {
